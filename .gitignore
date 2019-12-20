@@ -2,3 +2,5 @@
 index.csv
 index.json
 .DS_Store
+.rubocop_todo.yml
+.rubocop.yml

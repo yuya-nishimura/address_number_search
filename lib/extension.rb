@@ -2,16 +2,14 @@ class Array
   # 住所が与えられたクエリ配列に対しマッチするか判定する
   def address_matched?(queries)
     # 都道府県名、市町村区名、町域それぞれに対しクエリをループさせて判定する
-    self.each do |address_elem|
+    each do |address_elem|
       queries.each do |query|
         # どれか一つでもマッチした時点でtrueを返し、処理を止める
-        if address_elem.include?(query)
-          return true
-        end
+        address_elem.include?(query) && true
       end
     end
     # 何処にも引っかからなかった場合はfalseを返す
-    return false
+    false
   end
 
   # 配列を分割し検索用のクエリ配列を作る

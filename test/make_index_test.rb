@@ -4,10 +4,10 @@ require_relative "../lib/make_index"
 # 拡張メソッドのテスト
 class MakeIndexTest < Minitest::Test
   # サンプル
-  SAMPLE_ROW_1 = %w(東京都 杉並区 本天沼)
-  SAMPLE_ROW_2 = %w(東京都 中野区 中野)
-  SAMPLE_QUERIES_1 = %w(東京 京都 杉並 並区 本天 天沼)
-  SAMPLE_QUERIES_2 = %w(東京 京都 中野 野区)
+  SAMPLE_ROW_1 = %w[東京都 杉並区 本天沼]
+  SAMPLE_ROW_2 = %w[東京都 中野区 中野]
+  SAMPLE_QUERIES_1 = %w[東京 京都 杉並 並区 本天 天沼]
+  SAMPLE_QUERIES_2 = %w[東京 京都 中野 野区]
   SAMPLE_HASH_1 = { "東京" => [0], "京都" => [0],
                     "杉並" => [0], "並区" => [0],
                     "本天" => [0], "天沼" => [0] }

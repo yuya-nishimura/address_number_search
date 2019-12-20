@@ -43,8 +43,7 @@ end
 # クエリ配列と行数を元にインデックスを更新するメソッド
 def update_index(hash, queries, row_num)
   queries.each do |query|
-    hash[query] ||= [] #配列で初期化
+    hash[query] ||= [] # 配列で初期化
     hash[query] << row_num # 行数を配列としてまとめていく
   end
 end
-

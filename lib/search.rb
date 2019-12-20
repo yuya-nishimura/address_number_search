@@ -17,4 +17,3 @@ def search(input)
     puts row.join(",") if row[1..3].address_matched?(queries)
   end
 end
-
