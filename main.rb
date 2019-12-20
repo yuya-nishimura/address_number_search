@@ -15,12 +15,14 @@ class Array
     # 都道府県名、市町村区名、町域それぞれに対しクエリをループさせて判定する
     self.each do |address_elem|
       queries.each do |query|
-        # どれか一つでもマッチした時点で処理を止める
+        # どれか一つでもマッチした時点でtrueを返し、処理を止める
         if address_elem.include?(query)
           return true
         end
       end
     end
+    # 何処にも引っかからなかった場合はfalseを返す
+    return false
   end
 end
 
@@ -33,7 +35,7 @@ input = "東京都中野区"
 # 文字列を分割し検索用のクエリ配列を作る
 queries = []
 input.chars.each_cons(2) do |word|
-  queries << word.join("")
+  queries << word.join
 end
 
 # インデックスファイルを開きクエリで検索する
