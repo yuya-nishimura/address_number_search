@@ -1,11 +1,13 @@
 # ライブラリ読み込み
 require("csv")
+require("json")
 
 # 各CSVファイルのパス
-INDEX_PATH = File.expand_path("../index.csv", __FILE__)
+INDEX_PATH = File.expand_path("../index.json", __FILE__)
 DATASRC_PATH = File.expand_path("../src/KEN_ALL.CSV", __FILE__)
 
 # /libに配置したファイルを読み込み
+require_relative("./lib/extension")
 require_relative("./lib/make_index")
 require_relative("./lib/search")
 
