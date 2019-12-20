@@ -19,8 +19,7 @@ def make_index
 
   # ハッシュをJSONに書き出す
   File.open(INDEX_PATH, "w") do |f|
-    json = JSON.dump(hash_for_index)
-    f.write(json)
+    JSON.dump(hash_for_index, f)
   end
 end
 

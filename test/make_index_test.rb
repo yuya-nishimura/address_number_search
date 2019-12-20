@@ -2,7 +2,7 @@ require "minitest/autorun"
 require_relative "../lib/extension"
 require_relative "../lib/make_index"
 
-# 拡張メソッドのテスト
+# make_indexメソッドで使われる他メソッドのテスト
 class MakeIndexTest < Minitest::Test
   # サンプル
   SAMPLE_ROW_1 = %w[東京都 杉並区 本天沼]
