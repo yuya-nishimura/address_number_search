@@ -17,17 +17,9 @@ class Array
 end
 
 # 検索用メソッド
-def search
-  # インデックスファイルが無ければ終了
-  unless File.exist?(INDEX_PATH)
-    puts "インデックスファイルがありません"
-    return
-  end
-
-  puts "検索ワードを入力して下さい"
-
+def search(input)
   # 入力された文字列から空白を取り除く
-  input = gets.gsub!(/\s+/, "")
+  input.gsub!(/\s+/, "")
 
   # 文字列を分割し検索用のクエリ配列を作る
   queries = []
