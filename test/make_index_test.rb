@@ -1,4 +1,5 @@
 require "minitest/autorun"
+require_relative "../lib/extension"
 require_relative "../lib/make_index"
 
 # 拡張メソッドのテスト

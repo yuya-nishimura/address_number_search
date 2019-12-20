@@ -29,15 +29,13 @@ def create_queries(address_elements)
   # クエリ配列
   queries = []
 
-  # 各要素を二文字ずつに分割してクエリ配列に入れる
+  # 各要素をバイグラムに変換してクエリ配列に入れる
   address_elements.each do |address_element|
-    address_element.chars.each_cons(2) do |word|
-      queries << word.join
-    end
+    queries << address_element.to_bigram
   end
 
-  # クエリの重複をなくして返す
-  queries.uniq
+  # バイグラムの配列になっているのを平坦化し、重複を取り除く
+  queries.flatten.uniq
 end
 
 # クエリ配列と行数を元にインデックスを更新するメソッド
