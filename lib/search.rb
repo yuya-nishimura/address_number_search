@@ -9,7 +9,7 @@ def search(input)
 
   # 必要な行数を取得、見つからなければ終了
   row_numbers = fetch_row_numbers(index_hash, queries)
-  return "該当するレコードは存在しません" if row_numbers.empty?
+  return puts "該当するレコードは存在しません" if row_numbers.empty?
 
   # データソースを展開
   puts "CSVを開いています..."
@@ -47,7 +47,7 @@ def search_results(records, row_numbers)
   results = []
   # 該当する行から郵便番号、都道府県名、市町村区名、町域を出力する
   row_numbers.each do |row_number|
-    record = records[row_number]
+    record = records[row_number - 1] # 配列オブジェクトとして読み込んだので1行ズレている
     results << record[2] + "," + record[6..8].join(",")
   end
   results
