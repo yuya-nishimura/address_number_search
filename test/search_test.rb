@@ -1,5 +1,6 @@
 require "minitest/autorun"
 require_relative "../lib/search.rb"
+require_relative "../lib/extension.rb"
 
 require "json"
 require "csv"
@@ -13,12 +14,21 @@ class SearchTest < Minitest::Test
                         "本天" => [0], "天沼" => [0],
                         "中野" => [1], "野区" => [1] }
 
+  # クエリ配列のテスト
+  def test_queries
+    input1 = "東京"
+    input2 = "鳥取県鳥取市"
+    queries1 = input1.to_bigram
+    queries1.uniq!
+    queries2 = input2.to_bigram
+    queries2.uniq!
+    assert_equal queries1, %w[東京]
+    assert_equal queries2, %w[鳥取 取県 県鳥 取市]
+  end
+
   # parse_indexメソッドのテスト
   def test_parse_index
     index_hash = parse_index(INDEX_PATH)
-    # File.open(INDEX_PATH) do |f|
-    #   index_hash = JSON.load(f)
-    # end
     assert_equal [124_351, 124_352], index_hash["那国"] # インデックスが巨大なのでここだけテスト
   end
 
@@ -33,9 +43,9 @@ class SearchTest < Minitest::Test
   # search_resultsメソッドのテスト
   def test_search_results
     records = CSV.readlines(DATASRC_PATH, encoding: "SJIS:UTF-8")
-    expected_str1 = "0982202,北海道,中川郡美深町,玉川"
-    expected_str2 = "0368375,青森県,弘前市,細越"
+    expected_str1 = "0600010,北海道,札幌市中央区,北十条西"
+    expected_str2 = "0140368,秋田県,仙北市,角館町中菅沢"
     expected_results = [expected_str1, expected_str2]
-    assert_equal expected_results, search_results(records, [5435, 8636])
+    assert_equal expected_results, search_results(records, [26, 18_083])
   end
 end
