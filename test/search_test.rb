@@ -5,13 +5,14 @@ require "json"
 
 # searchメソッドのテスト
 class SearchTest < Minitest::Test
-  hash = {}
   INDEX_PATH = File.expand_path("../index.json", __dir__)
 
+  # インデックスのパーステスト
   def test_search
+    index_hash = {}
     File.open(INDEX_PATH) do |f|
-      hash = JSON.load(f)
+      index_hash = JSON.load(f)
     end
-    assert_equal [124351, 124352], hash.keys.slice(0..5)
+    assert_equal [124_351, 124_352], index_hash["那国"] # インデックスが巨大なのでここだけテスト
   end
 end
