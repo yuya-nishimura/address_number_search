@@ -5,37 +5,48 @@ require_relative "../lib/make_index"
 # make_indexメソッドで使われる他メソッドのテスト
 class MakeIndexTest < Minitest::Test
   # サンプル
-  SAMPLE_ROW_1 = %w[東京都 杉並区 本天沼]
-  SAMPLE_ROW_2 = %w[東京都 中野区 中野]
-  SAMPLE_QUERIES_1 = %w[東京 京都 杉並 並区 本天 天沼]
-  SAMPLE_QUERIES_2 = %w[東京 京都 中野 野区]
-  SAMPLE_HASH_1 = { "東京" => [0], "京都" => [0],
-                    "杉並" => [0], "並区" => [0],
-                    "本天" => [0], "天沼" => [0] }
-  SAMPLE_HASH_2 = { "東京" => [0, 1], "京都" => [0, 1],
-                    "杉並" => [0], "並区" => [0],
-                    "本天" => [0], "天沼" => [0],
-                    "中野" => [1], "野区" => [1] }
+  SAMPLE_ROW1 = %w[0000 00 1670003 ﾄｳｷｮｳﾄ ｽｷﾞﾅﾐｸ ﾎﾝｱﾏﾇﾏ 東京都 杉並区 本天沼 0 0 0 0 0 0]
+  SAMPLE_ROW2 = %w[0000 00 1640001 ﾄｳｷｮｳﾄ ﾅｶﾉｸ ﾅｶﾉ 東京都 中野区 中野 0 0 0 0 0 0]
+
+  SAMPLE_RECORD1 = %w[1670003 東京都 杉並区 本天沼]
+  SAMPLE_RECORD2 = %w[1640001 東京都 中野区 中野]
+
+  SAMPLE_QUERIES1 = %w[東京 京都 杉並 並区 本天 天沼]
+  SAMPLE_QUERIES2 = %w[東京 京都 中野 野区]
+
+  SAMPLE_INDEX_HASH1 = {  address_number: "1670003",
+                          prefecture: "東京都",
+                          city: "杉並区",
+                          town_area: "本天沼",
+                          queries: %w[東京 京都 杉並 並区 本天 天沼] }
+  SAMPLE_INDEX_HASH2 = {  address_number: "1640001",
+                          prefecture: "東京都",
+                          city: "中野区",
+                          town_area: "中野",
+                          queries: %w[東京 京都 中野 野区] }
+
+  # SAMPLE_ROW1 = %w[東京都 杉並区 本天沼]
+  # SAMPLE_ROW2 = %w[東京都 中野区 中野]
+  # SAMPLE_ARR1 = %w[00000 00 6800003 ﾄｯﾄﾘｹﾝ ﾄｯﾄﾘｼ ｶｸｼﾞ 鳥取県 鳥取市 覚寺 0 0 0 0 0 0]
+  # SAMPLE_ARR2 = %w[6800003 鳥取県 鳥取市 覚寺]
+
+  # create_recordメソッドのテスト
+  def test_create_record
+    assert_equal SAMPLE_RECORD1, create_record(SAMPLE_ROW1)
+    assert_equal SAMPLE_RECORD2, create_record(SAMPLE_ROW2)
+  end
 
   # create_queriesメソッドのテスト
   def test_create_queries
-    # Array#to_queriesで正しく分割される
-    assert_equal SAMPLE_QUERIES_1, create_queries(SAMPLE_ROW_1)
-    # 重複が削除される
-    assert_equal SAMPLE_QUERIES_2, create_queries(SAMPLE_ROW_2)
+    assert_equal SAMPLE_QUERIES1, create_queries(SAMPLE_RECORD1)
+    assert_equal SAMPLE_QUERIES2, create_queries(SAMPLE_RECORD2)
   end
 
-  # update_indexメソッドのテスト
-  def test_update_index
-    index_hash = {}
-    sample_query_arr = [SAMPLE_QUERIES_1, SAMPLE_QUERIES_2]
-
-    # サンプルのクエリ配列から期待されるハッシュが返る
-    update_index(index_hash, sample_query_arr[0], 0)
-    assert_equal(SAMPLE_HASH_1, index_hash)
-
-    # 2つ目
-    update_index(index_hash, sample_query_arr[1], 1)
-    assert_equal(SAMPLE_HASH_2, index_hash)
+  # create_index_hashメソッドのテスト
+  def test_create_index_hash
+    record_with_queries1 = create_index_hash(SAMPLE_RECORD1, SAMPLE_QUERIES1)
+    record_with_queries2 = create_index_hash(SAMPLE_RECORD2, SAMPLE_QUERIES2)
+    assert_equal SAMPLE_INDEX_HASH1, record_with_queries1
+    assert_equal SAMPLE_INDEX_HASH2, record_with_queries2
   end
 end
