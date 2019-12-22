@@ -6,6 +6,9 @@ def make_index
   # データソースのCSVを読み込む(二次元配列形式になる)
   csv = CSV.read(DATASRC_PATH, encoding: "SJIS:UTF-8")
 
+  # 同じレコードとみなせるものは統合する
+  concat_same_records(csv)
+
   # 取り出したCSVデータの行ごとにインデックス作成処理を行う
   csv.each do |row|
     # 行からレコードを作成
@@ -22,6 +25,22 @@ def make_index
   # ハッシュをJSONに書き出す
   File.open(INDEX_PATH, "w") do |f|
     JSON.dump(hash_for_index, f)
+  end
+end
+
+# CSVの行が複数に跨っているか判定するメソッド
+def same_record?(row, next_row)
+  row[2] == next_row[2] # 郵便番号で判定する
+end
+
+# CSVの行を一部統合するメソッド
+def concat_same_records(csv)
+  csv.each_cons(2) do |rows|
+    # 現在の行が次の行と同じレコードの場合統合する
+    if same_record?(rows[0], rows[1])
+      rows[0][8] += rows[1][8] # 町域を結合
+      csv.delete(rows[1]) # 統合された行は消す
+    end
   end
 end
 

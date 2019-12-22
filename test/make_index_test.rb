@@ -8,6 +8,10 @@ class MakeIndexTest < Minitest::Test
   SAMPLE_ROW1 = %w[0000 00 1670003 ﾄｳｷｮｳﾄ ｽｷﾞﾅﾐｸ ﾎﾝｱﾏﾇﾏ 東京都 杉並区 本天沼 0 0 0 0 0 0]
   SAMPLE_ROW2 = %w[0000 00 1640001 ﾄｳｷｮｳﾄ ﾅｶﾉｸ ﾅｶﾉ 東京都 中野区 中野 0 0 0 0 0 0]
 
+  SAMPLE_ROW3 = %w[0000 00 1670003 ﾄｳｷｮｳﾄ ｽｷﾞﾅﾐｸ ﾎﾝｱﾏﾇﾏ 東京都 杉並区 本天沼 0 0 0 0 0 0]
+  SAMPLE_ROW4 = %w[0000 00 1640001 ﾄｳｷｮｳﾄ ﾅｶﾉｸ ﾅｶﾉ 東京都 中野区 中野 0 0 0 0 0 0]
+  SAMPLE_ROW5 = %w[0000 00 1640001 ﾄｳｷｮｳﾄ ﾅｶﾉｸ ﾅｶﾉ 東京都 ほげ区 ほげ 0 0 0 0 0 0]
+
   SAMPLE_RECORD1 = %w[1670003 東京都 杉並区 本天沼]
   SAMPLE_RECORD2 = %w[1640001 東京都 中野区 中野]
 
@@ -34,6 +38,20 @@ class MakeIndexTest < Minitest::Test
   def test_create_record
     assert_equal SAMPLE_RECORD1, create_record(SAMPLE_ROW1)
     assert_equal SAMPLE_RECORD2, create_record(SAMPLE_ROW2)
+  end
+
+  # same_record?メソッドのテスト
+  def test_same_record?
+    assert !same_record?(SAMPLE_ROW3, SAMPLE_ROW4)
+    assert same_record?(SAMPLE_ROW4, SAMPLE_ROW5)
+  end
+
+  # concat_same_recordsメソッドのテスト
+  def test_concat_same_records
+    csv = [SAMPLE_ROW3, SAMPLE_ROW4, SAMPLE_ROW5]
+    concat_same_records(csv)
+    assert_equal "中野ほげ", csv[1][8]
+    assert_equal 2, csv.size
   end
 
   # create_queriesメソッドのテスト
