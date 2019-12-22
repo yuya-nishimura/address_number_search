@@ -29,11 +29,6 @@ class MakeIndexTest < Minitest::Test
                           town_area: "中野",
                           queries: %w[東京 京都 都中 中野 野区 区中] }
 
-  # SAMPLE_ROW1 = %w[東京都 杉並区 本天沼]
-  # SAMPLE_ROW2 = %w[東京都 中野区 中野]
-  # SAMPLE_ARR1 = %w[00000 00 6800003 ﾄｯﾄﾘｹﾝ ﾄｯﾄﾘｼ ｶｸｼﾞ 鳥取県 鳥取市 覚寺 0 0 0 0 0 0]
-  # SAMPLE_ARR2 = %w[6800003 鳥取県 鳥取市 覚寺]
-
   # create_recordメソッドのテスト
   def test_create_record
     assert_equal SAMPLE_RECORD1, create_record(SAMPLE_ROW1)

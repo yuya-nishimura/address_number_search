@@ -4,33 +4,23 @@ def make_index
   hash_for_index = { records_with_queries: [] }
 
   # データソースのCSVを読み込む(二次元配列形式になる)
+  puts "CSVファイルを読込中..."
   csv = CSV.read(DATASRC_PATH, encoding: "SJIS:UTF-8")
 
   # 同じレコードとみなせるものは統合する
+  puts "重複行を統合中..."
   concat_same_records(csv)
 
   # 取り出したCSVデータの行ごとにインデックス作成処理を行う
+  puts "レコード作成中..."
   csv.each do |row|
-    # 行からレコードを作成
-    record = create_record(row)
-
-    # レコードからクエリ配列を作成
-    queries = create_queries(record)
-
-    # レコードとクエリ配列からインデックスハッシュを作成し格納
-    index_hash = create_index_hash(record, queries)
-    hash_for_index[:records_with_queries] << index_hash
+    hash_for_index[:records_with_queries] << create_index(row)
   end
 
   # ハッシュをJSONに書き出す
   File.open(INDEX_PATH, "w") do |f|
     JSON.dump(hash_for_index, f)
   end
-end
-
-# CSVの行が複数に跨っているか判定するメソッド
-def same_record?(row, next_row)
-  row[2] == next_row[2] # 郵便番号で判定する
 end
 
 # CSVの行を一部統合するメソッド
@@ -42,6 +32,23 @@ def concat_same_records(csv)
       csv.delete(rows[1]) # 統合された行は消す
     end
   end
+end
+
+# CSVの行が複数に跨っているか判定するメソッド
+def same_record?(row, next_row)
+  row[2] == next_row[2] # 郵便番号で判定する
+end
+
+# CSVの行からインデックスを作成するメソッド
+def create_index(row)
+  # 行からレコードを作成
+  record = create_record(row)
+
+  # レコードからクエリ配列を作成
+  queries = create_queries(record)
+
+  # レコードとクエリ配列からインデックスハッシュを作成
+  create_index_hash(record, queries)
 end
 
 # CSVの行からレコードを生成するメソッド

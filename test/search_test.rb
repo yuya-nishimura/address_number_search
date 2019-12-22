@@ -8,6 +8,7 @@ require "csv"
 # searchメソッドのテスト
 class SearchTest < Minitest::Test
   INDEX_PATH = File.expand_path("../index.json", __dir__)
+  SAMPLE_QUERIES = %w[宮城 城県 県仙 仙台 台市 市青 青葉 葉区 区花 花京 京院]
   SAMPLE_INDEX_HASH = { "address_number" => "9800013",
                         "prefecture" => "宮城県",
                         "city" => "仙台市青葉区",
