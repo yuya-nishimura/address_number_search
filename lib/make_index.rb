@@ -25,18 +25,19 @@ end
 
 # CSVの行を一部統合するメソッド
 def concat_same_records(csv)
-  csv.each_cons(2) do |rows|
+  csv.each_with_index do |row, i|
+    next_row = csv[i + 1]
     # 現在の行が次の行と同じレコードの場合統合する
-    if same_record?(rows[0], rows[1])
-      rows[0][8] += rows[1][8] # 町域を結合
-      csv.delete(rows[1]) # 統合された行は消す
+    if same_record?(row, next_row)
+      row[8] += next_row[8] # 町域を結合
+      csv.delete(i + 1) # 統合された行は消す
     end
   end
 end
 
 # CSVの行が複数に跨っているか判定するメソッド
 def same_record?(row, next_row)
-  row[2] == next_row[2] # 郵便番号で判定する
+  next_row && row[2] == next_row[2] # 郵便番号で判定する
 end
 
 # CSVの行からインデックスを作成するメソッド
