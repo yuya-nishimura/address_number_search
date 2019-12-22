@@ -32,21 +32,16 @@ end
 
 # 都道府県名、市町村区名、町域を分割し検索用のクエリ配列を作るメソッド
 def create_queries(record)
-  # クエリ配列
-  queries = []
+  # 都道府県名から町域までを繋げる
+  address = record[1..3].join
 
-  # 各要素をバイグラムに変換してクエリ配列に入れる
-  record[1..3].each do |address_element|
-    queries << address_element.to_bigram
-  end
-
-  # バイグラムの配列になっているのを平坦化し、重複を取り除く
-  queries.flatten.uniq
+  # バイグラムに変換して重複を取り除く
+  address.to_bigram.uniq
 end
 
 # レコードとクエリ配列を元にインデックスに格納するハッシュを生成するメソッド
 def create_index_hash(record, queries)
   keys = %i[address_number prefecture city town_area queries]
-  values = record << queries
+  values = [*record, queries]
   keys.zip(values).to_h
 end

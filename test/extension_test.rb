@@ -15,9 +15,4 @@ class ExtensionTest < Minitest::Test
     assert_equal SAMPLE_BIGRAM1, SAMPLE_STRING1.to_bigram
     assert_equal SAMPLE_BIGRAM2, SAMPLE_STRING2.to_bigram
   end
-
-  # # Array#to_recordのテスト
-  # def test_to_record
-  #   assert_equal SAMPLE_ARR2, SAMPLE_ARR1.to_record
-  # end
 end

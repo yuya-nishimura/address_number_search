@@ -9,7 +9,7 @@ require "csv"
 class SearchTest < Minitest::Test
   INDEX_PATH = File.expand_path("../index.json", __dir__)
   DATASRC_PATH = File.expand_path("../src/KEN_ALL.CSV", __dir__)
-  SAMPLE_QUERIES = %w[宮城 城県 仙台 台市 市青 青葉 葉区 花京 京院]
+  SAMPLE_QUERIES = %w[宮城 城県 県仙 仙台 台市 市青 青葉 葉区 区花 花京 京院]
   SAMPLE_INDEX_HASH = { "address_number" => "9800013",
                         "prefecture" => "宮城県",
                         "city" => "仙台市青葉区",
@@ -39,7 +39,7 @@ class SearchTest < Minitest::Test
   def test_record_matched?
     assert record_matched? SAMPLE_INDEX_HASH, "宮城県".to_bigram
     assert record_matched? SAMPLE_INDEX_HASH, "仙台市青葉区".to_bigram
-    assert record_matched? SAMPLE_INDEX_HASH, "花京院".to_bigram
+    assert record_matched? SAMPLE_INDEX_HASH, "宮城県仙台市青葉区花京院".to_bigram
     assert !record_matched?(SAMPLE_INDEX_HASH, "花京院典明".to_bigram)
   end
 

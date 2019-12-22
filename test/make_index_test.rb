@@ -11,19 +11,19 @@ class MakeIndexTest < Minitest::Test
   SAMPLE_RECORD1 = %w[1670003 東京都 杉並区 本天沼]
   SAMPLE_RECORD2 = %w[1640001 東京都 中野区 中野]
 
-  SAMPLE_QUERIES1 = %w[東京 京都 杉並 並区 本天 天沼]
-  SAMPLE_QUERIES2 = %w[東京 京都 中野 野区]
+  SAMPLE_QUERIES1 = %w[東京 京都 都杉 杉並 並区 区本 本天 天沼]
+  SAMPLE_QUERIES2 = %w[東京 京都 都中 中野 野区 区中]
 
   SAMPLE_INDEX_HASH1 = {  address_number: "1670003",
                           prefecture: "東京都",
                           city: "杉並区",
                           town_area: "本天沼",
-                          queries: %w[東京 京都 杉並 並区 本天 天沼] }
+                          queries: %w[東京 京都 都杉 杉並 並区 区本 本天 天沼] }
   SAMPLE_INDEX_HASH2 = {  address_number: "1640001",
                           prefecture: "東京都",
                           city: "中野区",
                           town_area: "中野",
-                          queries: %w[東京 京都 中野 野区] }
+                          queries: %w[東京 京都 都中 中野 野区 区中] }
 
   # SAMPLE_ROW1 = %w[東京都 杉並区 本天沼]
   # SAMPLE_ROW2 = %w[東京都 中野区 中野]
