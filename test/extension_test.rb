@@ -15,4 +15,10 @@ class ExtensionTest < Minitest::Test
     assert_equal SAMPLE_BIGRAM1, SAMPLE_STRING1.to_bigram
     assert_equal SAMPLE_BIGRAM2, SAMPLE_STRING2.to_bigram
   end
+
+  # 拡張メソッドではないが全角スペース消去のテスト
+  def test_trim_whitespace
+    assert_equal "鳥取", "鳥　　　　　　　取".gsub(/\p{blank}+/, "")
+    assert_equal "鳥取", "鳥            取".gsub(/\s+/, "")
+  end
 end

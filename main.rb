@@ -39,11 +39,11 @@ loop do
     end
     # インデックスファイルがあれば、文字列の入力を受け付ける
     puts "検索ワードを入力して下さい(2文字以上)"
-    input = gets.chomp.gsub(/\s+/, "") # 空白は除去する
+    input = gets.chomp.gsub(/\p{blank}+/, "") # 空白は除去する
     # 2文字未満の場合再入力を求める
     while input.size < 2
       puts "検索ワードは2文字以上必要です"
-      input = gets.chomp.gsub(/\s+/, "")
+      input = gets.chomp.gsub(/\p{blank}+/, "")
     end
     # 入力された文字列で検索
     search(input)
